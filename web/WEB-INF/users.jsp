@@ -12,9 +12,21 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Users</title>
         <style>
+            .addUser {
+                float: left;
+            }
+            
+            .manageUsers {
+                float: left;
+                margin: 0px;
+            }
+            
+            .editUser {
+                float: left;
+            }
+                                
             table {
                 border-collapse: collapse;
-                width: 100%;
             }
 
             td, th {
@@ -29,6 +41,7 @@
         </style>
     </head>
     <body>
+        <div class="addUser">
         <h1>Add User</h1>
         <form action="user" method="post">
             <input type="email" name="add_email" placeholder="Email">
@@ -42,36 +55,55 @@
             <input type="password" name="add_password" placeholder="Password">
             <br>
             <select name="add_roles" id="roles">
-                <option value="system admin">system admin</option>
-                <option value="regular user">regular user</option>
-                <option value="company admin">company admin</option>
+                <option value="1">system admin</option>
+                <option value="2">regular user</option>
+                <option value="3">company admin</option>
             </select>
             <br>
             <input type="hidden" name="action" value="add">
-            <input type="submit" value="Save">
+            <input type="submit" value="Add">
         </form>
-        
-        <h1>Manage Users</h1>
+        </div>
+        <div class="manageUsers">
+        <h1><center>Manage Users</center></h1>
         <c:if test="${not empty userList}">
             <table>
                 <tr>
                     <th>Email</th>
-                    <th>Active</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Role</th>
+                    <th>Active</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 <c:forEach var="userList" items="${userList}">
                     <tr>
                         <td>${userList.email}</td>
-                        <td>${userList.active}</td>
                         <td>${userList.first_name}</td>
                         <td>${userList.last_name}</td>
-                        <td>${userList.role}</td>
-                        <td><a href="user?action=edit&amp;email=${userList.email}">Edit</a></td>
-<!--                        <td><a href="user?action=delete&amp;email=${userList.email}">Delete</a></td>-->
+                        <c:forEach var="roleList" items="${roleList}">
+                            <c:if test="${userList.role == roleList.role_id}">
+                                <td>${roleList.role_name}</td>
+                            </c:if>
+                        </c:forEach>
+                        <td>
+                            <c:choose>
+                                <c:when test="${userList.active}">
+                                    <c:set var="Yes" value="true" />Yes
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="No" value="false" />No  
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>
+                            <c:url value="/user" var="urlEdit">
+                                <c:param name="action" value="edit" />
+                                <c:param name="email" value="${userList.email}" />
+                            </c:url>
+                            <a href=${urlEdit}>Edit</a>
+                        </td>
                         <td>
                             <c:url value="/user" var="urlDelete">
                                 <c:param name="action" value="delete" />
@@ -83,25 +115,37 @@
                 </c:forEach>    
             </table>
         </c:if>
-        
+        </div>
+        <div class="editUser">
         <h1>Edit User</h1>
         <form action="user" method="post">
-            <input type="email" name="edit_email" placeholder="Email">
+            <input type="email" name="edit_email" placeholder="Email" value="${edit_email}">
             <br>
-            <input type="checkbox" name="edit_active" value="">Active
+            <c:choose>
+                <c:when test="${edit_active == true}">
+                    <input type="checkbox" name="edit_active" checked="checked" value="true" />
+                </c:when>
+                <c:otherwise>
+                    <input type="checkbox" name="edit_active" value="true" />
+                </c:otherwise>
+            </c:choose>    
+            Active
             <br>
-            <input type="text" name="edit_first_name" placeholder="First Name">
+            <input type="text" name="edit_first_name" placeholder="First Name" value="${edit_first_name}">
             <br>
-            <input type="text" name="edit_last_name" placeholder="Last Name">
+            <input type="text" name="edit_last_name" placeholder="Last Name" value="${edit_last_name}">
             <br>
-            <select name="roles" id="roles">
-                <option value="system admin">system admin</option>
-                <option value="regular user">regular user</option>
-                <option value="company admin">company admin</option>
+            <input type="password" name="edit_password" placeholder="Password" value="${edit_password}">
+            <br>
+            <select name="edit_roles">
+                <c:forEach items="${roleList}" var="role">
+                    <option value="${role.role_id}" ${role.role_id == edit_roles ? 'selected' : ''}>${role.role_name}</option>
+                </c:forEach>
             </select>
             <br>
             <input type="hidden" name="action" value="edit">
-            <input type="submit" value="Save">
+            <input type="submit" value="Update">
         </form>
+        </div>
     </body>
 </html>
