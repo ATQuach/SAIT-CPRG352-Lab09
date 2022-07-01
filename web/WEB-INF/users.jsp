@@ -18,7 +18,6 @@
             
             .manageUsers {
                 float: left;
-                margin: 0px;
             }
             
             .editUser {
