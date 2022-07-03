@@ -133,8 +133,7 @@
             <br>
             <input type="text" name="edit_last_name" placeholder="Last Name" value="${edit_last_name}">
             <br>
-            <input type="password" name="edit_password" placeholder="Password" value="${edit_password}">
-            <br>
+            <input type="hidden" name="edit_password" placeholder="Password" value="${edit_password}">
             <select name="edit_roles">
                 <c:forEach items="${roleList}" var="role">
                     <option value="${role.role_id}" ${role.role_id == edit_roles ? 'selected' : ''}>${role.role_name}</option>
