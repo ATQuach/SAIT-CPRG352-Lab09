@@ -118,8 +118,7 @@
         <div class="editUser">
         <h1>Edit User</h1>
         <form action="user" method="post">
-            <input type="email" name="edit_email" placeholder="Email" value="${edit_email}">
-            <br>
+            <input type="hidden" name="edit_email" placeholder="Email" value="${edit_email}">
             <c:choose>
                 <c:when test="${edit_active == true}">
                     <input type="checkbox" name="edit_active" checked="checked" value="true" />
