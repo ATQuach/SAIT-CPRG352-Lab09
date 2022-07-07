@@ -1,7 +1,7 @@
 <%-- 
     Document   : users
     Created on : 28-Jun-2022, 7:26:16 PM
-    Author     : andre
+    Author     : Andrew
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -79,13 +79,9 @@
                 <c:forEach var="userList" items="${userList}">
                     <tr>
                         <td>${userList.email}</td>
-                        <td>${userList.first_name}</td>
-                        <td>${userList.last_name}</td>
-                        <c:forEach var="roleList" items="${roleList}">
-                            <c:if test="${userList.role == roleList.role_id}">
-                                <td>${roleList.role_name}</td>
-                            </c:if>
-                        </c:forEach>
+                        <td>${userList.firstName}</td>
+                        <td>${userList.lastName}</td>
+                        <td>${userList.role.roleName}</td>
                         <td>
                             <c:choose>
                                 <c:when test="${userList.active}">
@@ -118,9 +114,9 @@
         <div class="editUser">
         <h1>Edit User</h1>
         <form action="user" method="post">
-            <input type="hidden" name="edit_email" placeholder="Email" value="${edit_email}">
+            <input type="hidden" name="edit_email" placeholder="Email" value="${editUser.email}">
             <c:choose>
-                <c:when test="${edit_active == true}">
+                <c:when test="${editUser.active == true}">
                     <input type="checkbox" name="edit_active" checked="checked" value="true" />
                 </c:when>
                 <c:otherwise>
@@ -129,15 +125,15 @@
             </c:choose>    
             Active
             <br>
-            <input type="text" name="edit_first_name" placeholder="First Name" value="${edit_first_name}">
+            <input type="text" name="edit_first_name" placeholder="First Name" value="${editUser.firstName}">
             <br>
-            <input type="text" name="edit_last_name" placeholder="Last Name" value="${edit_last_name}">
+            <input type="text" name="edit_last_name" placeholder="Last Name" value="${editUser.lastName}">
             <br>
-            <input type="hidden" name="edit_password" placeholder="Password" value="${edit_password}">
+            <input type="hidden" name="edit_password" placeholder="Password" value="${editUser.password}">
             <select name="edit_roles">
-                <c:forEach items="${roleList}" var="role">
-                    <option value="${role.role_id}" ${role.role_id == edit_roles ? 'selected' : ''}>${role.role_name}</option>
-                </c:forEach>
+                    <option value="1" <c:if test="${editUser.role.roleId == 1 }">selected</c:if>>system admin</option>
+                    <option value="2" <c:if test="${editUser.role.roleId == 2 }">selected</c:if>>regular user</option>
+                    <option value="3" <c:if test="${editUser.role.roleId == 3 }">selected</c:if>>company admin</option>
             </select>
             <br>
             <input type="hidden" name="action" value="edit">

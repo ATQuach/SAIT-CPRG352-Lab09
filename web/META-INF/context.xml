@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/Lab07_JDBC" >
-    <Resource
+<Context path="/Lab09_JPA">
+  <Resource 
         name="jdbc/userdb"
         url="jdbc:mysql://localhost:3306/userdb"
         username="root"
@@ -13,6 +13,5 @@
         removeAbandonedTimeout="60"
         auth="Container"
         type="javax.sql.DataSource"
-        driverClassName="com.mysql.jdbc.Driver"
-    />
+        driverClassName="com.mysql.jdbc.Driver" />
 </Context>

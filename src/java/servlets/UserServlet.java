@@ -37,12 +37,13 @@ public class UserServlet extends HttpServlet {
             else if (action != null && action.equals("edit")) {
                 String email = request.getParameter("email");
                 User user = us.get(email);
-                request.setAttribute("edit_email", user.getEmail());
-                request.setAttribute("edit_active", user.getActive());
-                request.setAttribute("edit_first_name", user.getFirst_name());
-                request.setAttribute("edit_last_name", user.getLast_name());
-                request.setAttribute("edit_password", user.getPassword());
-                request.setAttribute("edit_roles", user.getRole());
+//                request.setAttribute("edit_email", user.getEmail());
+//                request.setAttribute("edit_active", user.getActive());
+//                request.setAttribute("edit_first_name", user.getFirstName());
+//                request.setAttribute("edit_last_name", user.getLastName());
+//                request.setAttribute("edit_password", user.getPassword());
+//                request.setAttribute("edit_roles", user.getRole());
+                request.setAttribute("editUser", user);
             }
             
             List<User> users = us.getAll();
